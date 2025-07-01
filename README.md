@@ -42,7 +42,9 @@ $ npm run dev
 
 2. wsl에서 resource_setting.sh 파일의 경로로 이동
 ```
-$ chmod +x resource_setting.sh
+$ chmod +x resource_setting.s
+```
+```
 $ ./resource_setting.sh
 ```
 
