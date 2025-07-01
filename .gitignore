@@ -20,3 +20,6 @@ __MACOSX/
 dist/
 build/
 out/
+
+start-database.sh
+package-lock.json
