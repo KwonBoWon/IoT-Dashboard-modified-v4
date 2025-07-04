@@ -41,9 +41,9 @@ git clone https://github.com/seslabSJU/tinyIoT.git
 
 <br>   
 
-4. COAP 설정을 허용한다.
+4. CORS 설정을 허용한다.
 
-![image](https://github.com/user-attachments/assets/ab628a33-a30f-4f87-a84a-33948bd6a201)
+![image](https://github.com/user-attachments/assets/fca6816c-761b-4f19-b3c6-e6578a5de565)
 
 
 <br>
