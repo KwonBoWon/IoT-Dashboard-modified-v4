@@ -43,7 +43,8 @@ git clone https://github.com/seslabSJU/tinyIoT.git
 
 4. COAP 설정을 허용한다.
 
-![image](https://github.com/user-attachments/assets/11bb9152-c886-4320-b04a-0ddd7f54aaa3)
+![image](https://github.com/user-attachments/assets/ab628a33-a30f-4f87-a84a-33948bd6a201)
+
 
 <br>
 
