@@ -138,4 +138,16 @@ $ node simulation2025.cjs
 1. 오른쪽 위 톱니바퀴 모양
 2. Baseurl을 현재 TinyIoT 서버의 포트번호까지만 입력한다.
 
+<br>
+
+# 실행 화면
+
+<br>
+
+![image](https://github.com/user-attachments/assets/c156fb1b-bf36-4dd3-8538-15e720c130b8)
+
+<br>
+
+![image](https://github.com/user-attachments/assets/7aeb51fb-6557-4526-9b31-5eaba797ccc0)
+
 
