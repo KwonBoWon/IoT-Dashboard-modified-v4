@@ -10,7 +10,8 @@ TinyIoT 플랫폼의 데이터를 그래프로 시각화하는 기능을 제공�
 
 <br>
 
-![image](https://github.com/user-attachments/assets/72008ba9-d3b6-46ed-abf4-2bdac94d2fd8)
+![image](https://github.com/user-attachments/assets/177b3f30-aff4-4e0a-9bf8-bfbe243f0b29)
+
 
 <br>
 
