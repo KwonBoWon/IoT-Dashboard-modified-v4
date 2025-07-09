@@ -53,7 +53,56 @@ git clone https://github.com/seslabSJU/tinyIoT.git
 
 <br>
 
-# Installation
+# resource setting
+
+<br>
+
+### tinyIoT 서버가 실행된 상태에서 진행
+
+<br>
+
+[resource_setting.sh](./resource_setting.sh)
+1. resource_setting.sh 파일의 post 할 url을 현재 tinyIoT의 ip,port,CSEname 에 맞게 수정한다.
+   - vscode 에서 Ctrl + h 을 사용하여 한 번에 변경 추천.
+   - ex) 아래와 같은 curl 명령어의 첫 줄을 수정. 이후 모든 curl에 동일하게 수정하여 저장.
+![image](https://github.com/user-attachments/assets/e7d94ff4-8947-4141-9b68-41323f3ffe4f)
+
+<br>
+
+2. wsl에서 resource_setting.sh 파일의 경로로 이동
+```
+$ chmod +x resource_setting.sh
+```
+```
+$ ./resource_setting.sh
+```
+
+<br>
+
+# simulation
+
+<br>
+
+### resource setting을 한 상태에서 진행
+
+<br>
+
+[simulation2025.cjs](simulation2025.cjs)
+1. simulation2025.cjs 파일의 post url을 현재 tinyIoT의 CSEname부분까지만 수정한다. 뒷부분은 resource부분이므로 수정하지 않는다.
+   ex) url 부분을 수정. 이후 모든 url을 동일하게 수정하여 저장.
+   - vscode 에서 Ctrl + h 을 사용하여 한 번에 변경 추천.
+   ![image](https://github.com/user-attachments/assets/7c84c70f-00f6-4e99-9f3c-70bf760c0902)
+
+<br>
+
+2.. simulation2025.cjs 파일의 경로로 이동
+```
+$ node simulation2025.cjs
+```
+
+<br>
+
+# 대시보드 실행
 
 <br>
 
@@ -91,55 +140,6 @@ npm install --save-dev @types/leaflet
 ### Start project as developer version (현재 develop 버전만 제공)
 ```
 $ npm run dev
-```
-
-<br>
-
-## resource setting
-
-<br>
-
-### tinyIoT 서버가 실행된 상태에서 진행
-
-<br>
-
-[resource_setting.sh](./resource_setting.sh)
-1. resource_setting.sh 파일의 post 할 url을 현재 tinyIoT의 ip,port,CSEname 에 맞게 수정한다.
-   - vscode 에서 Ctrl + h 을 사용하여 한 번에 변경 추천.
-   - ex) 아래와 같은 curl 명령어의 첫 줄을 수정. 이후 모든 curl에 동일하게 수정하여 저장.
-![image](https://github.com/user-attachments/assets/e7d94ff4-8947-4141-9b68-41323f3ffe4f)
-
-<br>
-
-2. wsl에서 resource_setting.sh 파일의 경로로 이동
-```
-$ chmod +x resource_setting.sh
-```
-```
-$ ./resource_setting.sh
-```
-
-<br>
-
-## simulation
-
-<br>
-
-### resource setting을 한 상태에서 진행
-
-<br>
-
-[simulation2025.cjs](simulation2025.cjs)
-1. simulation2025.cjs 파일의 post url을 현재 tinyIoT의 CSEname부분까지만 수정한다. 뒷부분은 resource부분이므로 수정하지 않는다.
-   ex) url 부분을 수정. 이후 모든 url을 동일하게 수정하여 저장.
-   - vscode 에서 Ctrl + h 을 사용하여 한 번에 변경 추천.
-   ![image](https://github.com/user-attachments/assets/7c84c70f-00f6-4e99-9f3c-70bf760c0902)
-
-<br>
-
-2.. simulation2025.cjs 파일의 경로로 이동
-```
-$ node simulation2025.cjs
 ```
 
 <br>
