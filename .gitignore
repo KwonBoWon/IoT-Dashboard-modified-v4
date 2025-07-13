@@ -1,9 +1,5 @@
 node_modules/
 
-# 환경 설정 파일
-.env
-.env.*
-
 # 로그 파일
 *.log
 npm-debug.log*
