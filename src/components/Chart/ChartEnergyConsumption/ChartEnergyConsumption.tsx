@@ -24,7 +24,7 @@ export default function ChartEnergyConsumption({ series }: Props) {
 
   return (
     <div className="rounded-2xl border p-4 shadow-lg">
-      <div className="text-[20px] font-bold">Energy consumption</div>
+      <div className="text-[20px] font-bold">이산화탄소</div>
       <Chart
         type="line"
         height={227}
@@ -85,7 +85,7 @@ export default function ChartEnergyConsumption({ series }: Props) {
             // min,
             // max,
             title: {
-              text: 'Energy Consumption (kWh)',
+              text: '이산화탄소 (ppm)',
             },
             tooltip: {
               enabled: true,
@@ -122,7 +122,7 @@ export default function ChartEnergyConsumption({ series }: Props) {
                 (s.data[s.data.length - 1] as { x: string; y: string | number })
                   ?.y
               }
-              kWh
+              ppm
             </div>
           </div>
         ))}

@@ -21,7 +21,7 @@ export const getDeviceVoltage = async ({
       ct: string;
       con: number;
     };
-  }>(`/TinyIoT/${deviceName}/voltage/data/la`);
+  }>(`/TinyIoT/${deviceName}/Sensors/Humid/la`);
   return response.data['m2m:cin'];
 };
 
@@ -35,22 +35,22 @@ export const getDeviceEnergyConsumption = async ({
       ct: string;
       con: number;
     };
-  }>(`/TinyIoT/${deviceName}/energyConsumption/data/la`);
+  }>(`/TinyIoT/${deviceName}/Sensors/CO2/la`);
   return response.data['m2m:cin'];
 };
 
-export const getDeviceAmperage = async ({
-  deviceName,
-}: {
-  deviceName: string;
-}) => {
-  const response = await apiClient.get<{
-    'm2m:cin': {
-      con: number;
-    };
-  }>(`/TinyIoT/${deviceName}/current/data/la`);
-  return response.data['m2m:cin'];
-};
+// export const getDeviceAmperage = async ({
+//   deviceName,
+// }: {
+//   deviceName: string;
+// }) => {
+//   const response = await apiClient.get<{
+//     'm2m:cin': {
+//       con: number;
+//     };
+//   }>(`/TinyIoT/${deviceName}/current/data/la`);
+//   return response.data['m2m:cin'];
+// };
 
 export const getDeviceVoltageUrls = async ({
   deviceName,
@@ -61,7 +61,7 @@ export const getDeviceVoltageUrls = async ({
 }) => {
   const response = await apiClient.get<{
     'm2m:uril': string[];
-  }>(`/TinyIoT/${deviceName}/voltage/data`, {
+  }>(`/TinyIoT/${deviceName}/Sensors/Humid`, {
     params: {
       fu: '1',
       lim,
@@ -79,7 +79,7 @@ export const getDeviceEnergyConsumptionUrls = async ({
 }) => {
   const response = await apiClient.get<{
     'm2m:uril': string[];
-  }>(`/TinyIoT/${deviceName}/energyConsumption/data`, {
+  }>(`/TinyIoT/${deviceName}/Sensors/CO2`, {
     params: {
       fu: '1',
       lim,
@@ -107,7 +107,7 @@ export const getDeviceCurrentUrls = async ({
 }) => {
   const response = await apiClient.get<{
     'm2m:uril': string[];
-  }>(`/TinyIoT/${deviceName}/current/data`, {
+  }>(`/TinyIoT/${deviceName}/Sensors/Soil`, {
     params: {
       fu: '1',
       lim,
@@ -126,7 +126,7 @@ export const getDeviceCurrent = async ({
       ct: string;
       con: number;
     };
-  }>(`/TinyIoT/${deviceName}/current/data/la`);
+  }>(`/TinyIoT/${deviceName}/Sensors/Soil/la`);
   return response.data['m2m:cin'];
 };
 
@@ -139,7 +139,7 @@ export const getDeviceTemperatureUrls = async ({
 }) => {
   const response = await apiClient.get<{
     'm2m:uril': string[];
-  }>(`/TinyIoT/${deviceName}/temperature/data`, {
+  }>(`/TinyIoT/${deviceName}/Sensors/Temperature`, {
     params: {
       fu: '1',
       lim,
@@ -158,7 +158,7 @@ export const getDeviceTemperature = async ({
       ct: string;
       con: number;
     };
-  }>(`/TinyIoT/${deviceName}/temperature/data/la`);
+  }>(`/TinyIoT/${deviceName}/Sensors/Temperature/la`);
   return response.data['m2m:cin'];
 };
 
@@ -168,7 +168,7 @@ export const getLocation = async ({ deviceName }: { deviceName: string }) => {
       ct: string;
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/temperature/location/la`);
+  }>(`/TinyIoT/${deviceName}/Temperature/location/la`);
   return response.data['m2m:cin'];
 };
 
@@ -177,7 +177,7 @@ export const getBulbStatus = async ({ deviceName }: { deviceName: string }) => {
     'm2m:cin': {
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/my_bulb${deviceName.match(/\d+/)?.[0]}/status/la`);
+  }>(`/TinyIoT/${deviceName}/Actuator/Fan/la`);
 
   return response.data['m2m:cin'];
 };
@@ -187,7 +187,7 @@ export const getBulbBright = async ({ deviceName }: { deviceName: string }) => {
     'm2m:cin': {
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/my_bulb${deviceName.match(/\d+/)?.[0]}/bright/la`);
+  }>(`/TinyIoT/${deviceName}/Actuator/LED/la`);
   return response.data['m2m:cin'];
 };
 
@@ -201,7 +201,7 @@ export const getSwitchStatus = async ({
       con: string;
     };
   }>(
-    `/TinyIoT/${deviceName}/my_switch${deviceName.match(/\d+/)?.[0]}/status/la`,
+    `/TinyIoT/${deviceName}/Actuator/Water/la`,
   );
 
   return response.data['m2m:cin'];
@@ -218,7 +218,7 @@ export const switchBulbStatus = async ({
     'm2m:cin': {
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/my_bulb${deviceName.match(/\d+/)?.[0]}/status`, {
+  }>(`/TinyIoT/${deviceName}/Actuator/Fan`, {
     'm2m:cin': {
       con: status,
     },
@@ -238,7 +238,7 @@ export const updateBulbBright = async ({
     'm2m:cin': {
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/my_bulb${deviceName.match(/\d+/)?.[0]}/bright`, {
+  }>(`/TinyIoT/${deviceName}/Actuator/LED`, {
     'm2m:cin': {
       con: bright,
     },
@@ -258,7 +258,7 @@ export const switchSwitchStatus = async ({
     'm2m:cin': {
       con: string;
     };
-  }>(`/TinyIoT/${deviceName}/my_switch${deviceName.match(/\d+/)?.[0]}/status`, {
+  }>(`/TinyIoT/${deviceName}/Actuator/Water`, {
     'm2m:cin': {
       con: status,
     },

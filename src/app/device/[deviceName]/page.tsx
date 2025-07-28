@@ -37,8 +37,8 @@ L.Icon.Default.mergeOptions({
 
 //지도 매핑
 const deviceNameMap: Record<string, { label: string; lat: number; lng: number }> = {
-  my_device1: { label: 'my_device1', lat: 37.549654, lng: 127.073858 },
-  my_device2: { label: 'my_device2', lat: 37.550301, lng: 127.073289 },
+  my_device2: { label: 'my_device2', lat: 37.549654, lng: 127.073858 },
+  TinyFarm: { label: 'TinyFarm', lat: 37.550301, lng: 127.073289 },
   my_device3: { label: 'my_device3', lat: 37.550967, lng: 127.075569 },
 };
 
@@ -65,7 +65,7 @@ import {
 
 //2025
 const getDeviceColor = (deviceName: string) => {
-  if (deviceName === 'my_device1') return 'red';
+  if (deviceName === 'TinyFarm') return 'red';
   if (deviceName === 'my_device2') return 'green';
   if (deviceName === 'my_device3') return 'blue';
   return 'gray'; // fallback
@@ -117,6 +117,8 @@ export default function HomePage() {
       }),
   });
 
+
+  // Fan
   const { data: deviceBulbStatus, refetch: refetchDeviceBulbStatus } = useQuery(
     {
       queryKey: ['deviceBulbStatus', deviceName],
@@ -126,6 +128,8 @@ export default function HomePage() {
         }),
     },
   );
+
+  // LED
 
   const { data: deviceBulbBright, refetch: refetchDeviceBulbBright } = useQuery(
     {
@@ -137,6 +141,8 @@ export default function HomePage() {
     },
   );
 
+
+  // water
   const { data: deviceSwitchStatus, refetch: refetchDeviceSwitchStatus } =
     useQuery({
       queryKey: ['deviceSwitchStatus', deviceName],
@@ -146,39 +152,43 @@ export default function HomePage() {
         }),
     });
 
+
+
+// Fan
   const { mutate: switchBulbStatusMutate } = useMutation({
     mutationFn: switchBulbStatus,
     onSuccess: () => {
-      alert('전구 상태가 변경되었습니다.');
+      alert('환풍기 상태가 변경되었습니다.');
       refetchDeviceBulbStatus();
     },
   });
 
 
-
+// Fan
   const onSwitchBulbStatus: ChangeEventHandler<HTMLInputElement> = (e) => {
     switchBulbStatusMutate({
       deviceName,
-      status: e.target.checked ? 'on' : 'off',
+      status: e.target.checked ? 'ON' : 'OFF',
     });
   };
 
+  // water
   const { mutate: switchSwitchStatusMutate } = useMutation({
     mutationFn: switchSwitchStatus,
     onSuccess: () => {
-      alert('스위치 상태가 변경되었습니다.');
+      alert('급수 상태가 변경되었습니다.');
       refetchDeviceSwitchStatus();
     },
   });
 
+
+  // water
   const onSwitchSwitchStatus: ChangeEventHandler<HTMLInputElement> = (e) => {
     switchSwitchStatusMutate({
       deviceName,
-      status: e.target.checked ? 'on' : 'off',
+      status: e.target.checked ? 'ON' : 'OFF',
     });
   };
-
-
 
   
   const [bulbBright, setBulbBright] = useState<string>();
@@ -199,11 +209,6 @@ export default function HomePage() {
   });
 
   const onSetBulbBright = () => {
-if (deviceBulbStatus?.con !== 'on') {
-    alert('전구가 꺼져 있어 밝기를 조절할 수 없습니다.');
-    return;
-  }
-
     updateBulbBrightMutate({
       deviceName,
       bright: bulbBright as string,
@@ -211,7 +216,9 @@ if (deviceBulbStatus?.con !== 'on') {
   };
 
   const onChangeBulbBright: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setBulbBright(e.target.value);
     console.log(e.target.value);
+
   };
 
 
@@ -252,7 +259,7 @@ if (deviceBulbStatus?.con !== 'on') {
   });
 }
       },
-      Number(safeSessionStorage.get('interval')),
+      60000, // 10 seconds
     );
 
     return () => clearInterval(interval);
@@ -302,7 +309,7 @@ if (deviceBulbStatus?.con !== 'on') {
   });//2025
 }
       },
-      Number(safeSessionStorage.get('interval')),
+      60000, // 10 seconds
     );
 
     return () => clearInterval(interval);
@@ -363,7 +370,7 @@ if (deviceBulbStatus?.con !== 'on') {
   }); //2025
 }
       },
-      Number(safeSessionStorage.get('interval')),
+      60000, // 10 seconds
     );
 
     return () => clearInterval(interval);
@@ -427,7 +434,7 @@ if (deviceBulbStatus?.con !== 'on') {
   });
 }
       },
-      Number(safeSessionStorage.get('interval')),
+      60000, // 10 seconds
     );
 
     return () => clearInterval(interval);
@@ -475,20 +482,20 @@ const color = getDeviceColor(deviceName);
       <div className="rounded-2xl border p-4 shadow-lg">
         <div className="text-[20px] font-bold">On/Off</div>
         <div className="mt-[12px] flex items-center gap-[12px]">
-          <div className="min-w-[75px] font-medium">스위치 상태</div>
+          <div className="min-w-[75px] font-medium">급수 스위치</div>
           <input
             type="checkbox"
             className="toggle toggle-success toggle-md"
-            checked={deviceSwitchStatus?.con === 'on'}
+            checked={deviceSwitchStatus?.con === 'ON'}
             onChange={onSwitchSwitchStatus}
           />
         </div>
         <div className="mt-[12px] flex items-center gap-[12px]">
-          <div className="min-w-[75px] font-medium">전구 상태</div>
+          <div className="min-w-[75px] font-medium">환풍기 상태</div>
           <input
             type="checkbox"
             className="toggle toggle-success toggle-md"
-            checked={deviceBulbStatus?.con === 'on'}
+            checked={deviceBulbStatus?.con === 'ON'}
             onChange={onSwitchBulbStatus}
           />
         </div>

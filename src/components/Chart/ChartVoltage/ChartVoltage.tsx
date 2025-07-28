@@ -24,7 +24,7 @@ export default function ChartVoltage({ series }: Props) {
 
   return (
     <div className="rounded-2xl border p-4 shadow-lg">
-      <div className="text-[20px] font-bold">센서1</div>
+      <div className="text-[20px] font-bold">습도</div>
       <Chart
         type="line"
         height={227}
@@ -85,7 +85,7 @@ export default function ChartVoltage({ series }: Props) {
             // min,
             // max,
             title: {
-              text: 'Voltage(V)',
+              text: '습도 (%)',
             },
             tooltip: {
               enabled: true,
@@ -122,7 +122,7 @@ export default function ChartVoltage({ series }: Props) {
                 (s.data[s.data.length - 1] as { x: string; y: string | number })
                   ?.y
               }
-              V
+              %
             </div>
           </div>
         ))}

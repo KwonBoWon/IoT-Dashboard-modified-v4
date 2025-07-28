@@ -31,7 +31,7 @@ export default function ChartCurrent({ series }: Props) {
 
   return (
     <div className="rounded-2xl border p-4 shadow-lg">
-      <div className="text-[20px] font-bold"></div>
+      <div className="text-[20px] font-bold">토양 수분</div>
       <Chart
         type="line"
         height={227}
@@ -91,7 +91,7 @@ export default function ChartCurrent({ series }: Props) {
             // min,
             // max,
             title: {
-              text: 'current(A)',
+              text: '토양 수분 (%)',
             },
             tooltip: {
               enabled: true,
@@ -131,7 +131,7 @@ export default function ChartCurrent({ series }: Props) {
                 (s.data[s.data.length - 1] as { x: string; y: string | number })
                   ?.y
               }
-              kWh
+              %
             </div>
           </div>
         ))}
@@ -160,7 +160,7 @@ export default function ChartCurrent({ series }: Props) {
                 );
               }, 0)
               .toFixed(2) || ''}
-            kWh
+            %
           </div>
         </div>
       </div>

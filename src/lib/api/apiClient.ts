@@ -6,7 +6,7 @@ const storedBaseURL = safeSessionStorage.get('baseURL');
 const storedXM2MRI = safeSessionStorage.get('X-M2M-RI');
 const storedXM2MOrigin = safeSessionStorage.get('X-M2M-Origin');
 const storedXM2MRVI = safeSessionStorage.get('X-M2M-RVI');
-const interval = safeSessionStorage.get('interval');
+const interval = 60000; // 10 seconds
 
 if (!storedBaseURL) {
   safeSessionStorage.set('baseURL', env.NEXT_PUBLIC_APP_SERVER_URL);
@@ -22,7 +22,7 @@ if (!storedXM2MRVI) {
 }
 
 if (!interval) {
-  safeSessionStorage.set('interval', '10000');
+  safeSessionStorage.set('interval', '60000');
 }
 
 export const apiClient = axios.create({

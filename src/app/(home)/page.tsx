@@ -30,8 +30,8 @@ L.Icon.Default.mergeOptions({
 
 //지도 매핑
 const deviceNameMap: Record<string, { label: string; lat: number; lng: number }> = {
-  군자관: { label: 'my_device1', lat: 37.549654, lng: 127.073858 },
-  광개토관: { label: 'my_device2', lat: 37.550301, lng: 127.073289 },
+  군자관: { label: 'my_device2', lat: 37.549654, lng: 127.073858 },
+  광개토관: { label: 'TinyFarm', lat: 37.550301, lng: 127.073289 },
   대양AI센터: { label: 'my_device3', lat: 37.550967, lng: 127.075569 },
 };
 
@@ -42,7 +42,7 @@ import ChartVoltage from '@/components/Chart/ChartVoltage';
 
 import {
   getData,
-  getDeviceAmperage,
+  //getDeviceAmperage,
   getDeviceCurrent,
   getDeviceCurrentUrls,
   getDeviceEnergyConsumption,
@@ -68,10 +68,10 @@ export default function HomePage() {
 
   // device table
   const { data: myDevice1Voltage } = useQuery({
-    queryKey: ['deviceVoltage', 'my_device1'],
+    queryKey: ['deviceVoltage', 'TinyFarm'],
     queryFn: () =>
       getDeviceVoltage({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
       }),
   });
 
@@ -92,10 +92,10 @@ export default function HomePage() {
   });
 
   const { data: myDevice1Current } = useQuery({
-    queryKey: ['deviceAmperage', 'my_device1'],
+    queryKey: ['deviceAmperage', 'TinyFarm'],
     queryFn: () =>
       getDeviceCurrent({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
       }),
   });
 
@@ -116,10 +116,10 @@ export default function HomePage() {
   });
 
   const { data: myDevice1Location } = useQuery({
-    queryKey: ['deviceLocation', 'my_device1'],
+    queryKey: ['deviceLocation', 'TinyFarm'],
     queryFn: () =>
       getLocation({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
       }),
   });
 
@@ -130,6 +130,40 @@ export default function HomePage() {
         deviceName: 'my_device2',
       }),
   });
+
+  const { data: myDevice3Location } = useQuery({
+    queryKey: ['deviceLocation', 'my_device3'],
+    queryFn: () =>
+      getLocation({
+        deviceName: 'my_device3',
+      }),
+  });
+
+  const { data: myDevice1Temperature } = useQuery({
+    queryKey: ['deviceTemperature', 'TinyFarm'],
+    queryFn: () =>
+      getDeviceTemperature({
+        deviceName: 'TinyFarm',
+      }),
+  });
+
+  const { data: myDevice2Temperature } = useQuery({
+    queryKey: ['deviceTemperature', 'my_device2'],
+    queryFn: () =>
+      getDeviceTemperature({
+        deviceName: 'my_device2',
+      }),
+  });
+
+  const { data: myDevice3Temperature } = useQuery({
+    queryKey: ['deviceTemperature', 'my_device3'],
+    queryFn: () =>
+      getDeviceTemperature({
+        deviceName: 'my_device3',
+      }),
+  });
+
+
 
  // voltage
   const [device1VoltageData, setDevice1VoltageData] = useState<
@@ -143,31 +177,31 @@ export default function HomePage() {
   >([]);
 
   const { data: DeviceVoltage1Urls } = useQuery<string[]>({
-    queryKey: ['deviceVoltageUrls', 'my_device1'],
+    queryKey: ['deviceVoltageUrls', 'TinyFarm'],
     queryFn: () =>
       getDeviceVoltageUrls({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
         lim: '10',
       }),
   });
 
-  const { data: DeviceVoltage2Urls } = useQuery<string[]>({
-    queryKey: ['deviceVoltageUrls', 'my_device2'],
-    queryFn: () =>
-      getDeviceVoltageUrls({
-        deviceName: 'my_device2',
-        lim: '10',
-      }),
-  });
+  // const { data: DeviceVoltage2Urls } = useQuery<string[]>({
+  //   queryKey: ['deviceVoltageUrls', 'my_device2'],
+  //   queryFn: () =>
+  //     getDeviceVoltageUrls({
+  //       deviceName: 'my_device2',
+  //       lim: '10',
+  //     }),
+  // });
 
-  const { data: DeviceVoltage3Urls } = useQuery<string[]>({
-    queryKey: ['deviceVoltageUrls', 'my_device3'],
-    queryFn: () =>
-      getDeviceVoltageUrls({
-        deviceName: 'my_device3',
-        lim: '10',
-      }),
-  });
+  // const { data: DeviceVoltage3Urls } = useQuery<string[]>({
+  //   queryKey: ['deviceVoltageUrls', 'my_device3'],
+  //   queryFn: () =>
+  //     getDeviceVoltageUrls({
+  //       deviceName: 'my_device3',
+  //       lim: '10',
+  //     }),
+  // });
 
   useEffect(() => {
 
@@ -186,42 +220,42 @@ export default function HomePage() {
       );
     }
 
-    if (DeviceVoltage2Urls) {
-      Promise.all(DeviceVoltage2Urls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice2VoltageData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (DeviceVoltage2Urls) {
+    //   Promise.all(DeviceVoltage2Urls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice2VoltageData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
-    if (DeviceVoltage3Urls) {
-      Promise.all(DeviceVoltage3Urls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice3VoltageData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (DeviceVoltage3Urls) {
+    //   Promise.all(DeviceVoltage3Urls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice3VoltageData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
     
       interval = setInterval(async () => {
-        const [latestDevice1, latestDevice2, latestDevice3] = await Promise.all([
-          getDeviceVoltage({ deviceName: 'my_device1' }),
-          getDeviceVoltage({ deviceName: 'my_device2' }),
-          getDeviceVoltage({ deviceName: 'my_device3' }),
+        const [latestDevice1] = await Promise.all([
+          getDeviceVoltage({ deviceName: 'TinyFarm' }),
+          // getDeviceVoltage({ deviceName: 'my_device2' }),
+          // getDeviceVoltage({ deviceName: 'my_device3' }),
         ]); //2025
     // const interval = setInterval(
     //   async () => {
     //     const latestDevice1 = await getDeviceVoltage({
-    //       deviceName: 'my_device1',
+    //       deviceName: 'TinyFarm',
     //     });
     //     const latestDevice2 = await getDeviceVoltage({
     //       deviceName: 'my_device2',
@@ -248,37 +282,37 @@ if (latestDevice1) {
   });
 }
 
-if (latestDevice2) {
-  setDevice2VoltageData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice2) {
+//   setDevice2VoltageData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}
+//     return updated;
+//   });
+// }
 
-if (latestDevice3) {
-  setDevice3VoltageData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice3) {
+//   setDevice3VoltageData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}//2025
+//     return updated;
+//   });
+// }//2025
         // if (latestDevice1) {
         //   setDevice1VoltageData((prev) => [
         //     ...prev,
@@ -298,46 +332,46 @@ if (latestDevice3) {
         //   ]);
         // }
       },
-      Number(safeSessionStorage.get('interval')),
+      60000,
     );
 
     return () => clearInterval(interval);
-  }, [DeviceVoltage1Urls, DeviceVoltage2Urls, DeviceVoltage3Urls]);
+  }, [DeviceVoltage1Urls]);
 
   // energy consumption
   const [device1EnergyConsumptionData, setDevice1EnergyConsumptionData] =
     useState<{ x: string; y: string | number }[]>([]);
-  const [device2EnergyConsumptionData, setDevice2EnergyConsumptionData] =
-    useState<{ x: string; y: string | number }[]>([]);
-  const [device3EnergyConsumptionData, setDevice3EnergyConsumptionData] =
-    useState<{ x: string; y: string | number }[]>([]);
+  // const [device2EnergyConsumptionData, setDevice2EnergyConsumptionData] =
+  //   useState<{ x: string; y: string | number }[]>([]);
+  // const [device3EnergyConsumptionData, setDevice3EnergyConsumptionData] =
+  //   useState<{ x: string; y: string | number }[]>([]);
 
   const { data: DeviceEnergyConsumption1Urls } = useQuery<string[]>({
-    queryKey: ['deviceEnergyConsumptionUrls', 'my_device1'],
+    queryKey: ['deviceEnergyConsumptionUrls', 'TinyFarm'],
     queryFn: () =>
       getDeviceEnergyConsumptionUrls({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
         lim: '10',
       }),
   });
 
-  const { data: DeviceEnergyConsumption2Urls } = useQuery<string[]>({
-    queryKey: ['deviceEnergyConsumptionUrls', 'my_device2'],
-    queryFn: () =>
-      getDeviceEnergyConsumptionUrls({
-        deviceName: 'my_device2',
-        lim: '10',
-      }),
-  });
+  // const { data: DeviceEnergyConsumption2Urls } = useQuery<string[]>({
+  //   queryKey: ['deviceEnergyConsumptionUrls', 'my_device2'],
+  //   queryFn: () =>
+  //     getDeviceEnergyConsumptionUrls({
+  //       deviceName: 'my_device2',
+  //       lim: '10',
+  //     }),
+  // });
 
-  const { data: DeviceEnergyConsumption3Urls } = useQuery<string[]>({
-    queryKey: ['deviceEnergyConsumptionUrls', 'my_device3'],
-    queryFn: () =>
-      getDeviceEnergyConsumptionUrls({
-        deviceName: 'my_device3',
-        lim: '10',
-      }),
-  });
+  // const { data: DeviceEnergyConsumption3Urls } = useQuery<string[]>({
+  //   queryKey: ['deviceEnergyConsumptionUrls', 'my_device3'],
+  //   queryFn: () =>
+  //     getDeviceEnergyConsumptionUrls({
+  //       deviceName: 'my_device3',
+  //       lim: '10',
+  //     }),
+  // });
 
   useEffect(() => {
 
@@ -356,36 +390,36 @@ if (latestDevice3) {
       );
     }
 
-    if (DeviceEnergyConsumption2Urls) {
-      Promise.all(DeviceEnergyConsumption2Urls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice2EnergyConsumptionData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (DeviceEnergyConsumption2Urls) {
+    //   Promise.all(DeviceEnergyConsumption2Urls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice2EnergyConsumptionData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
-    if (DeviceEnergyConsumption3Urls) {
-      Promise.all(DeviceEnergyConsumption3Urls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice3EnergyConsumptionData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (DeviceEnergyConsumption3Urls) {
+    //   Promise.all(DeviceEnergyConsumption3Urls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice3EnergyConsumptionData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
     // const interval = setInterval(
     //   async () => {
     //     const latestDevice1 = await getDeviceEnergyConsumption({
-    //       deviceName: 'my_device1',
+    //       deviceName: 'TinyFarm',
     //     });
     //     const latestDevice2 = await getDeviceEnergyConsumption({
     //       deviceName: 'my_device2',
@@ -395,10 +429,10 @@ if (latestDevice3) {
     //     });
 
     interval = setInterval(async () => {
-        const [latestDevice1, latestDevice2, latestDevice3] = await Promise.all([
-          getDeviceEnergyConsumption({ deviceName: 'my_device1' }),
-          getDeviceEnergyConsumption({ deviceName: 'my_device2' }),
-          getDeviceEnergyConsumption({ deviceName: 'my_device3' }),
+        const [latestDevice1] = await Promise.all([
+          getDeviceEnergyConsumption({ deviceName: 'TinyFarm' }),
+          // getDeviceEnergyConsumption({ deviceName: 'my_device2' }),
+          // getDeviceEnergyConsumption({ deviceName: 'my_device3' }),
         ]); //2025
 
         // if (latestDevice1) {
@@ -437,45 +471,46 @@ if (latestDevice3) {
   });
 }
 
-if (latestDevice2) {
-  setDevice2EnergyConsumptionData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice2) {
+//   setDevice2EnergyConsumptionData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}
+//     return updated;
+//   });
+// }
 
-if (latestDevice3) {
-  setDevice3EnergyConsumptionData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice3) {
+//   setDevice3EnergyConsumptionData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}//2025
+//     return updated;
+//   });
+// }//2025
     },
-     Number(safeSessionStorage.get('interval')));
+      60000,
+    );
 
   return () => clearInterval(interval);
 }, [
   DeviceEnergyConsumption1Urls,
-  DeviceEnergyConsumption2Urls,
-  DeviceEnergyConsumption3Urls,
+  // DeviceEnergyConsumption2Urls,
+  // DeviceEnergyConsumption3Urls,
 ]);
 
   // current
@@ -490,31 +525,31 @@ if (latestDevice3) {
   >([]);
 
   const { data: Device1CurrentUrls } = useQuery<string[]>({
-    queryKey: ['deviceCurrentUrls', 'my_device1'],
+    queryKey: ['deviceCurrentUrls', 'TinyFarm'],
     queryFn: () =>
       getDeviceCurrentUrls({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
         lim: '10',
       }),
   });
 
-  const { data: Device2CurrentUrls } = useQuery<string[]>({
-    queryKey: ['deviceCurrentUrls', 'my_device2'],
-    queryFn: () =>
-      getDeviceCurrentUrls({
-        deviceName: 'my_device2',
-        lim: '10',
-      }),
-  });
+  // const { data: Device2CurrentUrls } = useQuery<string[]>({
+  //   queryKey: ['deviceCurrentUrls', 'my_device2'],
+  //   queryFn: () =>
+  //     getDeviceCurrentUrls({
+  //       deviceName: 'my_device2',
+  //       lim: '10',
+  //     }),
+  // });
 
-  const { data: Device3CurrentUrls } = useQuery<string[]>({
-    queryKey: ['deviceCurrentUrls', 'my_device3'],
-    queryFn: () =>
-      getDeviceCurrentUrls({
-        deviceName: 'my_device3',
-        lim: '10',
-      }),
-  });
+  // const { data: Device3CurrentUrls } = useQuery<string[]>({
+  //   queryKey: ['deviceCurrentUrls', 'my_device3'],
+  //   queryFn: () =>
+  //     getDeviceCurrentUrls({
+  //       deviceName: 'my_device3',
+  //       lim: '10',
+  //     }),
+  // });
 
   useEffect(() => {
 
@@ -533,36 +568,36 @@ if (latestDevice3) {
       );
     }
 
-    if (Device2CurrentUrls) {
-      Promise.all(Device2CurrentUrls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice2CurrentData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (Device2CurrentUrls) {
+    //   Promise.all(Device2CurrentUrls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice2CurrentData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
-    if (Device3CurrentUrls) {
-      Promise.all(Device3CurrentUrls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice3CurrentData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (Device3CurrentUrls) {
+    //   Promise.all(Device3CurrentUrls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice3CurrentData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
     // const interval = setInterval(
     //   async () => {
     //     const latestDevice1 = await getDeviceCurrent({
-    //       deviceName: 'my_device1',
+    //       deviceName: 'TinyFarm',
     //     });
     //     const latestDevice2 = await getDeviceCurrent({
     //       deviceName: 'my_device2',
@@ -572,10 +607,10 @@ if (latestDevice3) {
     //     });
 
     interval = setInterval(async () => {
-        const [latestDevice1, latestDevice2, latestDevice3] = await Promise.all([
-          getDeviceCurrent({ deviceName: 'my_device1' }),
-          getDeviceCurrent({ deviceName: 'my_device2' }),
-          getDeviceCurrent({ deviceName: 'my_device3' }),
+        const [latestDevice1] = await Promise.all([
+          getDeviceCurrent({ deviceName: 'TinyFarm' }),
+          // getDeviceCurrent({ deviceName: 'my_device2' }),
+          // getDeviceCurrent({ deviceName: 'my_device3' }),
         ]); //2025
 
         // if (latestDevice1) {
@@ -614,43 +649,43 @@ if (latestDevice3) {
   });
 }
 
-if (latestDevice2) {
-  setDevice2CurrentData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice2) {
+//   setDevice2CurrentData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}
+//     return updated;
+//   });
+// }
 
-if (latestDevice3) {
-  setDevice3CurrentData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice3) {
+//   setDevice3CurrentData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}//2025
+//     return updated;
+//   });
+// }//2025
       },
-      Number(safeSessionStorage.get('interval')),
+      60000,
     );
 
     return () => clearInterval(interval);
-  }, [Device1CurrentUrls, Device2CurrentUrls, Device3CurrentUrls]);
+  }, [Device1CurrentUrls]);
 
   // temperature
   const [device1TemperatureData, setDevice1TemperatureData] = useState<
@@ -664,31 +699,31 @@ if (latestDevice3) {
   >([]);
 
   const { data: device1TemperatureUrls } = useQuery<string[]>({
-    queryKey: ['deviceTemperatureUrls', 'my_device1'],
+    queryKey: ['deviceTemperatureUrls', 'TinyFarm'],
     queryFn: () =>
       getDeviceTemperatureUrls({
-        deviceName: 'my_device1',
+        deviceName: 'TinyFarm',
         lim: '10',
       }),
   });
 
-  const { data: device2TemperatureUrls } = useQuery<string[]>({
-    queryKey: ['deviceTemperatureUrls', 'my_device2'],
-    queryFn: () =>
-      getDeviceTemperatureUrls({
-        deviceName: 'my_device2',
-        lim: '10',
-      }),
-  });
+  // const { data: device2TemperatureUrls } = useQuery<string[]>({
+  //   queryKey: ['deviceTemperatureUrls', 'my_device2'],
+  //   queryFn: () =>
+  //     getDeviceTemperatureUrls({
+  //       deviceName: 'my_device2',
+  //       lim: '10',
+  //     }),
+  // });
 
-  const { data: device3TemperatureUrls } = useQuery<string[]>({
-    queryKey: ['deviceTemperatureUrls', 'my_device3'],
-    queryFn: () =>
-      getDeviceTemperatureUrls({
-        deviceName: 'my_device3',
-        lim: '10',
-      }),
-  });
+  // const { data: device3TemperatureUrls } = useQuery<string[]>({
+  //   queryKey: ['deviceTemperatureUrls', 'my_device3'],
+  //   queryFn: () =>
+  //     getDeviceTemperatureUrls({
+  //       deviceName: 'my_device3',
+  //       lim: '10',
+  //     }),
+  // });
 
   useEffect(() => {
 
@@ -707,36 +742,36 @@ if (latestDevice3) {
       );
     }
 
-    if (device2TemperatureUrls) {
-      Promise.all(device2TemperatureUrls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice2TemperatureData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (device2TemperatureUrls) {
+    //   Promise.all(device2TemperatureUrls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice2TemperatureData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
-    if (device3TemperatureUrls) {
-      Promise.all(device3TemperatureUrls.map((url) => getData(url))).then(
-        (data) => {
-          setDevice3TemperatureData(
-            data.map((entry) => ({
-              x: dayjs(entry.ct).toISOString(),
-              y: entry.con,
-            })),
-          );
-        },
-      );
-    }
+    // if (device3TemperatureUrls) {
+    //   Promise.all(device3TemperatureUrls.map((url) => getData(url))).then(
+    //     (data) => {
+    //       setDevice3TemperatureData(
+    //         data.map((entry) => ({
+    //           x: dayjs(entry.ct).toISOString(),
+    //           y: entry.con,
+    //         })),
+    //       );
+    //     },
+    //   );
+    // }
 
     // const interval = setInterval(
     //   async () => {
     //     const latestDevice1 = await getDeviceTemperature({
-    //       deviceName: 'my_device1',
+    //       deviceName: 'TinyFarm',
     //     });
     //     const latestDevice2 = await getDeviceTemperature({
     //       deviceName: 'my_device2',
@@ -746,10 +781,10 @@ if (latestDevice3) {
     //     });
 
     interval = setInterval(async () => {
-        const [latestDevice1, latestDevice2, latestDevice3] = await Promise.all([
-          getDeviceTemperature({ deviceName: 'my_device1' }),
-          getDeviceTemperature({ deviceName: 'my_device2' }),
-          getDeviceTemperature({ deviceName: 'my_device3' }),
+        const [latestDevice1] = await Promise.all([
+          getDeviceTemperature({ deviceName: 'TinyFarm' }),
+          // getDeviceTemperature({ deviceName: 'my_device2' }),
+          // getDeviceTemperature({ deviceName: 'my_device3' }),
         ]); //2025
 
         // if (latestDevice1) {
@@ -788,43 +823,43 @@ if (latestDevice3) {
   });
 }
 
-if (latestDevice2) {
-  setDevice2TemperatureData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice2) {
+//   setDevice2TemperatureData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice2.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}
+//     return updated;
+//   });
+// }
 
-if (latestDevice3) {
-  setDevice3TemperatureData((prev) => {
-    const now = dayjs();
-    const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
+// if (latestDevice3) {
+//   setDevice3TemperatureData((prev) => {
+//     const now = dayjs();
+//     const prevX = prev[0]?.x ? dayjs(prev[0].x) : now;
 
-    const nextX = now.isAfter(prevX.add(10, 'second'))
-      ? now
-      : prevX.add(10, 'second');
+//     const nextX = now.isAfter(prevX.add(10, 'second'))
+//       ? now
+//       : prevX.add(10, 'second');
 
-    const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
-    updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
+//     const updated = [...prev, { x: nextX.toISOString(), y: latestDevice3.con }];
+//     updated.sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime());
 
-    return updated;
-  });
-}//2025
+//     return updated;
+//   });
+// }//2025
       },
-      Number(safeSessionStorage.get('interval')),
+      60000,
     );
 
     return () => clearInterval(interval);
-  }, [device1TemperatureUrls, device2TemperatureUrls, device3TemperatureUrls]);
+  }, [device1TemperatureUrls]);
 
 //2025
 
@@ -834,7 +869,7 @@ return (
     {/* voltage */}
     <ChartVoltage
       series={[
-        { name: 'my_device1', data: device1VoltageData, color: 'red' },
+        { name: 'TinyFarm', data: device1VoltageData, color: 'red' },
         { name: 'my_device2', data: device2VoltageData, color: 'green' },
         { name: 'my_device3', data: device3VoltageData, color: 'blue' },
       ]}
@@ -843,9 +878,9 @@ return (
     {/* energy consumption */}
     <ChartEnergyConsumption
       series={[
-        { name: 'my_device1', data: device1EnergyConsumptionData, color: 'red' },
-        { name: 'my_device2', data: device2EnergyConsumptionData, color: 'green' },
-        { name: 'my_device3', data: device3EnergyConsumptionData, color: 'blue' },
+        { name: 'TinyFarm', data: device1EnergyConsumptionData, color: 'red' },
+        // { name: 'my_device2', data: device2EnergyConsumptionData, color: 'green' },
+        // { name: 'my_device3', data: device3EnergyConsumptionData, color: 'blue' },
       ]}
     />
 
@@ -856,16 +891,17 @@ return (
         <thead>
           <tr className="text-left">
             <th className="px-0.5 py-3 whitespace-nowrap">Name</th>
-            <th className="px-0.5 py-3 whitespace-nowrap">센서1 (단위)</th>
-            <th className="px-0.5 py-3 whitespace-nowrap">센서2 (단위)</th>
-            <th className="px-0.5 py-3 whitespace-nowrap">센서3 (단위)</th>
+            <th className="px-0.5 py-3 whitespace-nowrap">Humidity (％)</th>
+            <th className="px-0.5 py-3 whitespace-nowrap">Soil (％)</th>
+            <th className="px-0.5 py-3 whitespace-nowrap">Temperature (℃)</th>
           </tr>
         </thead>
         <tbody>
           {[1, 2, 3].map((num) => {
-            const device = `my_device${num}`;
+            const device = `TinyFarm`;
             const voltage = eval(`myDevice${num}Voltage`);
             const current = eval(`myDevice${num}Current`);
+            const temperature = eval(`myDevice${num}Temperature`);
             return (
               <tr
                 key={device}
@@ -880,9 +916,7 @@ return (
                   {current?.con ? Number(current.con).toFixed(2) : 'null'}
                 </td>
                 <td className="px-0.5 py-3 whitespace-nowrap">
-                  {voltage?.con && current?.con
-                    ? (Number(voltage.con) * Number(current.con)).toFixed(2)
-                    : 'null'}
+                  {temperature?.con ? Number(temperature.con).toFixed(2): 'null'}
                 </td>
               </tr>
             );
@@ -927,11 +961,11 @@ return (
 
     {/* current */}
     <div className="rounded-2xl border p-4 shadow-lg overflow-x-auto">
-      <div className="text-[20px] font-bold mb-2">센서2</div>
+      <div className="text-[20px] font-bold mb-2"></div>
       <div className="min-w-[500px]">
         <ChartCurrent
           series={[
-            { name: 'my_device1', data: device1CurrentData, color: 'red' },
+            { name: 'TinyFarm', data: device1CurrentData, color: 'red' },
             { name: 'my_device2', data: device2CurrentData, color: 'green' },
             { name: 'my_device3', data: device3CurrentData, color: 'blue' },
           ]}
@@ -942,7 +976,7 @@ return (
     {/* temperature humidity */}
     <ChartTemperatureHumidity
       series={[
-        { name: 'my_device1', data: device1TemperatureData, color: 'red' },
+        { name: 'TinyFarm', data: device1TemperatureData, color: 'red' },
         { name: 'my_device2', data: device2TemperatureData, color: 'green' },
         { name: 'my_device3', data: device3TemperatureData, color: 'blue' },
       ]}
