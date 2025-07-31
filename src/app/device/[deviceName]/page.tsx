@@ -191,35 +191,48 @@ export default function HomePage() {
   };
 
   
-  const [bulbBright, setBulbBright] = useState<string>();
+const [bulbBright, setBulbBright] = useState<string>("");
 
-  useEffect(() => {
-    if (!deviceBulbBright) {
-      return;
-    }
-    setBulbBright(deviceBulbBright.con);
-  }, [deviceBulbBright]);
+useEffect(() => {
+  if (!deviceBulbBright) return;
+  setBulbBright(deviceBulbBright.con);
+}, [deviceBulbBright]);
 
-  const { mutate: updateBulbBrightMutate } = useMutation({
-    mutationFn: updateBulbBright,
-    onSuccess: () => {
-      alert('적용되었습니다.');
-      refetchDeviceBulbBright();
-    },
+const { mutate: updateBulbBrightMutate } = useMutation({
+  mutationFn: updateBulbBright,
+  onSuccess: () => {
+    alert("적용되었습니다.");
+    refetchDeviceBulbBright();
+  },
+});
+
+const onSetBulbBright = () => {
+  
+  updateBulbBrightMutate({
+    deviceName,
+    bright: bulbBright, 
   });
+};
 
-  const onSetBulbBright = () => {
-    updateBulbBrightMutate({
-      deviceName,
-      bright: bulbBright as string,
-    });
-  };
+const onChangeBulbBright: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const value = e.target.value; 
+  const num = Number(value);    
 
-  const onChangeBulbBright: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBulbBright(e.target.value);
-    console.log(e.target.value);
+  if (value === "") {
+   
+    setBulbBright("");
+    return;
+  }
 
-  };
+  if (!isNaN(num) && Number.isInteger(num) && num >= 0 && num <= 10) {
+    setBulbBright(value); 
+    console.log("valid:", value);
+  } else {
+    alert("0~10 사이의 정수만 입력 가능합니다.");
+    e.target.value = bulbBright ?? "";
+  }
+};
+
 
 
   // voltage
@@ -507,7 +520,7 @@ const color = getDeviceColor(deviceName);
             min={0}
             max={100}
             value={bulbBright}
-            onChange={(e) => setBulbBright(e.target.value)}
+            onChange={ onChangeBulbBright}
           />
           <button className="btn btn-primary btn-sm" onClick={onSetBulbBright}>
             적용
