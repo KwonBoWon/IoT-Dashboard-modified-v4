@@ -31,7 +31,7 @@ export default function ChartCurrent({ series }: Props) {
 
   return (
     <div className="rounded-2xl border p-4 shadow-lg">
-      <div className="text-[20px] font-bold">토양 수분</div>
+      <div className="text-[20px] font-bold">Soil humidity</div>
       <Chart
         type="line"
         height={227}
@@ -91,7 +91,7 @@ export default function ChartCurrent({ series }: Props) {
             // min,
             // max,
             title: {
-              text: '토양 수분 (%)',
+              text: 'Soil humidity (%)',
             },
             tooltip: {
               enabled: true,

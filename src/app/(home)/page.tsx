@@ -8,7 +8,6 @@ import Pagination from 'rc-pagination';
 //import { useQuery } from '@tanstack/react-query';
 
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
 
 // import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -19,13 +18,16 @@ const Map = dynamic(() => import('@/components/Map'), {
   ssr: false,
 });
 
-// 마커 아이콘이 안 나오는 문제 해결
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
+// 마커 아이콘이 안 나오는 문제 해결 - client side에서만 실행
+if (typeof window !== 'undefined') {
+  const L = require('leaflet');
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  });
+}
 
 
 //지도 매핑
@@ -886,7 +888,7 @@ return (
 
     {/* device table */}
     <div className="rounded-2xl border p-4 shadow-lg overflow-x-auto">
-      <div className="text-[20px] font-bold mb-4">등록된 디바이스</div>
+      <div className="text-[20px] font-bold mb-4">Registered Devices</div>
       <table className="min-w-[500px] table-auto text-sm">
         <thead>
           <tr className="text-left">
@@ -984,7 +986,7 @@ return (
 
     {/* map */}
     <div className="col-span-1 rounded-2xl border p-4 shadow-lg">
-      <div className="text-[20px] font-bold mb-2">디바이스 위치</div>
+      <div className="text-[20px] font-bold mb-2">Device Locations</div>
       <Map
         center={[37.550834, 127.074534]}
         zoom={16}

@@ -21,7 +21,7 @@ export const getDeviceVoltage = async ({
       ct: string;
       con: number;
     };
-  }>(`/TinyIoT/${deviceName}/Sensors/Humid/la`);
+  }>(`/TinyIoT/${deviceName}/Sensors/Humidity/la`);
   return response.data['m2m:cin'];
 };
 
@@ -61,7 +61,7 @@ export const getDeviceVoltageUrls = async ({
 }) => {
   const response = await apiClient.get<{
     'm2m:uril': string[];
-  }>(`/TinyIoT/${deviceName}/Sensors/Humid`, {
+  }>(`/TinyIoT/${deviceName}/Sensors/Humidity`, {
     params: {
       fu: '1',
       lim,

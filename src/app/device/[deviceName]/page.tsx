@@ -176,7 +176,7 @@ export default function HomePage() {
   const { mutate: switchSwitchStatusMutate } = useMutation({
     mutationFn: switchSwitchStatus,
     onSuccess: () => {
-      alert('급수 상태가 변경되었습니다.');
+      alert('Water switch status has been changed.');
       refetchDeviceSwitchStatus();
     },
   });
@@ -201,7 +201,7 @@ useEffect(() => {
 const { mutate: updateBulbBrightMutate } = useMutation({
   mutationFn: updateBulbBright,
   onSuccess: () => {
-    alert("적용되었습니다.");
+    alert("Applied successfully.");
     refetchDeviceBulbBright();
   },
 });
@@ -228,7 +228,7 @@ const onChangeBulbBright: ChangeEventHandler<HTMLInputElement> = (e) => {
     setBulbBright(value); 
     console.log("valid:", value);
   } else {
-    alert("0~10 사이의 정수만 입력 가능합니다.");
+    alert("Only integers between 0 and 10 are allowed.");
     e.target.value = bulbBright ?? "";
   }
 };
@@ -495,7 +495,7 @@ const color = getDeviceColor(deviceName);
       <div className="rounded-2xl border p-4 shadow-lg">
         <div className="text-[20px] font-bold">On/Off</div>
         <div className="mt-[12px] flex items-center gap-[12px]">
-          <div className="min-w-[75px] font-medium">급수 스위치</div>
+          <div className="min-w-[75px] font-medium">Water Switch</div>
           <input
             type="checkbox"
             className="toggle toggle-success toggle-md"
@@ -504,7 +504,7 @@ const color = getDeviceColor(deviceName);
           />
         </div>
         <div className="mt-[12px] flex items-center gap-[12px]">
-          <div className="min-w-[75px] font-medium">환풍기 상태</div>
+          <div className="min-w-[75px] font-medium">Fan Switch</div>
           <input
             type="checkbox"
             className="toggle toggle-success toggle-md"
@@ -513,7 +513,7 @@ const color = getDeviceColor(deviceName);
           />
         </div>
         <div className="mt-[12px] flex items-center gap-[12px]">
-          <div className="min-w-[75px] font-medium">전구 밝기</div>
+          <div className="min-w-[75px] font-medium">Light Brightness</div>
           <input
             type="number"
             className="input input-sm input-bordered w-[70px]"
@@ -523,7 +523,7 @@ const color = getDeviceColor(deviceName);
             onChange={ onChangeBulbBright}
           />
           <button className="btn btn-primary btn-sm" onClick={onSetBulbBright}>
-            적용
+            apply
           </button>
         </div>
       </div>
